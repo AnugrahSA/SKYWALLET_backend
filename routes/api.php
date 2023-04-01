@@ -3,7 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\BookmarkController;
+use App\Http\Controllers\RelasibookmarkController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,4 +24,9 @@ Route::prefix('/v1/user')->group(function(){
     Route::get('/',[UserController::class,'getAlluser']);
     Route::get('/{id}',[UserController::class,'getUserbyid']);
     Route::post('/',[UserController::class,'adduser']);
+});
+
+Route::prefix('/v1/bookmark')->group(function(){
+    Route::get('/{id}',[BookmarkController::class,'getbookmarkbyiduser']);
+    Route::get('/data/{id}',[RelasibookmarkController::class,'getisibookmark']);
 });
