@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\RelasibookmarkController;
+use App\Http\Controllers\AuthApi\Commands as CommandAuthApi;
+use App\Http\Controllers\AuthApi\Queries as QueryAuthApi;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,6 +27,9 @@ Route::prefix('/v1/user')->group(function(){
     Route::get('/{id}',[UserController::class,'getUserbyid']);
     Route::post('/',[UserController::class,'adduser']);
 });
+
+Route::post('/v1/login', [CommandAuthApi::class, 'login']);
+Route::get('/v1/logout', [QueryAuthApi::class, 'logout'])->middleware(['auth:sanctum']);
 
 Route::prefix('/v1/bookmark')->group(function(){
     Route::get('/{id}',[BookmarkController::class,'getbookmarkbyiduser']);
