@@ -21,25 +21,25 @@ class Commands extends Controller
             $errors = $validator->messages();
 
             return response()->json([
-                'status' => 422,
+                'status' => 'failed',
                 'result' => $errors,
                 'token' => null,
             ],Response::HTTP_UNPROCESSABLE_ENTITY);
         } else{
-            $user = User::where('username', $request->username)->first();
+            $user = User::where('email', $request->email)->first();
             if(!$user || ($request->password != $user->password)){
                 // throw ValidationException::withMessages([
                 //     'result' => ['The provided credentials are incorrect.'],
                 // ]);
                 return response()->json([
-                    'status' => 200,
-                    'result' => 'Username or password incorrect',
+                    'status' => 'failed',
+                    'result' => 'Email or password incorrect',
                     'token' => null,
                 ], Response::HTTP_UNAUTHORIZED);
             } else{
                 $token = $user->createToken('login')->plainTextToken;
                 return response()->json([
-                    'status' => 200,
+                    'status' => 'success',
                     'result' => $user,
                     'token' => $token,
                 ], Response::HTTP_OK);
